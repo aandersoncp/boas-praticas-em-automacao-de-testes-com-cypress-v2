@@ -1,4 +1,7 @@
 describe('Code duplication bad practice - repetitive tests', () => {
+
+  const terms = ['reactjs', 'vuejs']
+
   beforeEach(() => {
     cy.intercept(
       'GET',
@@ -15,23 +18,14 @@ describe('Code duplication bad practice - repetitive tests', () => {
       .clear()
   })
 
-  it('searches for "reactjs"', () => {
-    cy.get('@searchField')
-      .type('reactjs{enter}')
-
-    cy.wait('@getStories')
-
-    cy.get('.table-row')
-      .should('have.length', 100)
-  })
-
-  it('searches for "vuejs"', () => {
-    cy.get('@searchField')
-      .type('vuejs{enter}')
-
-    cy.wait('@getStories')
-
-    cy.get('.table-row')
-      .should('have.length', 100)
+  terms.forEach(term => {
+    it(`searches for "${term}"`, () => {
+      cy.search(term)
+  
+      cy.wait('@getStories')
+  
+      cy.get('.table-row')
+        .should('have.length', 100)
+    })
   })
 })

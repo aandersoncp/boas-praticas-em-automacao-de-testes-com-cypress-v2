@@ -17,3 +17,4 @@ Cypress.Commands.add('randomlyTogglePurchaseAgreement', () => {
       .click()
   }
 })
+
